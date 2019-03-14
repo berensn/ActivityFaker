@@ -89,7 +89,7 @@ class CipherSuiteUtil {
 //	SSL v3.1 = TLS v1.0
 //	SSL v3.2 = TLS v1.1
 //	SSL v3.3 = TLS v1.2
-	
+    
 	private static final Logger logger = LoggerFactory.getLogger("com.mps.deepviolet.suite.CipherSuiteUtil");
 	
 	// Common OIDs to Extension Mappings
@@ -151,7 +151,7 @@ class CipherSuiteUtil {
 	}	
 
 	static {		
-//        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+		//Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		
 		Security.addProvider( new BouncyCastleProvider() );
         
@@ -311,36 +311,36 @@ class CipherSuiteUtil {
 					if( vulnBEAST ) {
 						logger.warn("Following ciphersuite vulnerable to BEAST attack, "+suitename);
 					}
-				}
-//				if (!vulnROBOT) {
-//					vulnROBOT = suitename.startsWith("TLS_RSA");
-//					if( vulnROBOT ) {
-//						logger.warn("Following ciphersuite vulnerable to ROBOT attack, "+suitename);
-//					}
-//				}				
+				}/*
+				if (!vulnROBOT) {
+					vulnROBOT = suitename.startsWith("TLS_RSA");
+					if( vulnROBOT ) {
+						logger.warn("Following ciphersuite vulnerable to ROBOT attack, "+suitename);
+					}
+				}*/			
 				listv.add( suitename+"(0x"+Integer.toHexString(c)+")" );
 			}	
 			hostdata.setVectorValue( "getServerMetadataInstance",versionString(v), listv.toArray(tmp));			
 		}		
-		
-//		// Iterate over supported ciphersuites.
-//		int agMaxStrength = STRONG;
-//		int agMinStrength = STRONG;
-//		boolean vulnBEAST = false;
-//		boolean vulnROBOT = false;
-//		for (int v : sv) {
-//			Set<Integer> vsc = suppCS.get(v);
-//			agMaxStrength = Math.min(
-//				maxStrength(vsc), agMaxStrength);
-//			agMinStrength = Math.min(
-//				minStrength(vsc), agMinStrength);
-//			if (!vulnBEAST) {
-//				vulnBEAST = testBEAST(isa, v, vsc);
-//			}
-//			if (!vulnROBOT) {
-//				vulnROBOT = cipherSuiteString(v, cipher_name_convention).startsWith("TLS_RSA");
-//			}
-//		}
+		/*
+		// Iterate over supported ciphersuites.
+		int agMaxStrength = STRONG;
+		int agMinStrength = STRONG;
+		boolean vulnBEAST = false;
+		boolean vulnROBOT = false;
+		for (int v : sv) {
+			Set<Integer> vsc = suppCS.get(v);
+			agMaxStrength = Math.min(
+				maxStrength(vsc), agMaxStrength);
+			agMinStrength = Math.min(
+				minStrength(vsc), agMinStrength);
+			if (!vulnBEAST) {
+				vulnBEAST = testBEAST(isa, v, vsc);
+			}
+			if (!vulnROBOT) {
+				vulnROBOT = cipherSuiteString(v, cipher_name_convention).startsWith("TLS_RSA");
+			}
+		}*/
 		
 		//TODO: NEEDS TO BE CHECKED AND TESTED.
 		session.setVulnerabilityAssessmentValue(IDVSession.VULNERABILITY_ASSESSMENTS.MINIMAL_ENCRYPTION_STRENGTH, strengthString(agMinStrength));
@@ -470,11 +470,11 @@ class CipherSuiteUtil {
 				i2++;
 			}
 			i3++;
-			
-//			// Take it easy on server, delay between a little between block checks
-//			try {
-//				Thread.currentThread().sleep((int)(Math.random()*750));
-//			} catch (InterruptedException e) {}
+			/*
+			// Take it easy on server, delay between a little between block checks
+			try {
+				Thread.currentThread().sleep((int)(Math.random()*750));
+			} catch (InterruptedException e) {}*/
 			
 			for (;;) {
 				//TODO could make this multi-threaded to speed up scanning. 
@@ -540,20 +540,21 @@ class CipherSuiteUtil {
 	 * @return java.security.cert.X509Certificate Converted object
 	 * @see http://exampledepot.8waytrips.com/egs/javax.security.cert/ConvertCert.html
 	 */
-//	public static java.security.cert.X509Certificate convert(javax.security.cert.X509Certificate cert) {
-//	    try {
-//	        byte[] encoded = cert.getEncoded();
-//	        ByteArrayInputStream bis = new ByteArrayInputStream(encoded);
-//	        java.security.cert.CertificateFactory cf
-//	            = java.security.cert.CertificateFactory.getInstance("X.509");
-//	        return (java.security.cert.X509Certificate)cf.generateCertificate(bis);
-//	    } catch (javax.security.cert.CertificateEncodingException e) {
-//			logger.error(e.getMessage(),e);
-//	    } catch (java.security.cert.CertificateException e) {
-//			logger.error(e.getMessage(),e);
-//	    }
-//	    return null;
-//	}
+	 /*
+	public static java.security.cert.X509Certificate convert(javax.security.cert.X509Certificate cert) {
+	    try {
+	        byte[] encoded = cert.getEncoded();
+	        ByteArrayInputStream bis = new ByteArrayInputStream(encoded);
+	        java.security.cert.CertificateFactory cf
+	            = java.security.cert.CertificateFactory.getInstance("X.509");
+	        return (java.security.cert.X509Certificate)cf.generateCertificate(bis);
+	    } catch (javax.security.cert.CertificateEncodingException e) {
+			logger.error(e.getMessage(),e);
+	    } catch (java.security.cert.CertificateException e) {
+			logger.error(e.getMessage(),e);
+	    }
+	    return null;
+	}*/
 	
 	/**
 	 * Analysis to determine ciphersuite strength.
@@ -631,34 +632,35 @@ class CipherSuiteUtil {
         return result;        
 	}
 	
-//	public static final synchronized ServerMetadata getHttpResponseHeaders(URL url) throws Exception {
-//		
-//		HostData hostdata = null;
-//		
-//		// return cached instance of server TLS data if available and not expired.
-//		if ( hostcache.containsKey( url ) ) {
-//			hostdata = hostcache.get(url);
-//			if( !hostdata.isExpired() )
-//				return hostdata;
-//		}
-//		
-//		// No cached instance of TLS data so create some
-//		hostdata = new HostData(url);
-//		hostcache.put(url, hostdata);	
-//		
-//        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-//        conn.connect();
-//        Map<String, List<String>> headers = conn.getHeaderFields();
-//        
-//        Set<String> k = headers.keySet();
-//        Iterator<String> keys = k.iterator();
-//        
-//        while( keys.hasNext() ) {//        	
-//        	String key = keys.next();
-//        	hostdata.setVectorValue(key,(String[])headers.get(key).toArray() );//        	
-//        }		
-//        return hostdata;//        
-//	}
+	/*
+	public static final synchronized ServerMetadata getHttpResponseHeaders(URL url) throws Exception {
+		
+		HostData hostdata = null;
+		
+		// return cached instance of server TLS data if available and not expired.
+		if ( hostcache.containsKey( url ) ) {
+			hostdata = hostcache.get(url);
+			if( !hostdata.isExpired() )
+				return hostdata;
+		}
+		
+		// No cached instance of TLS data so create some
+		hostdata = new HostData(url);
+		hostcache.put(url, hostdata);	
+		
+        HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+        conn.connect();
+        Map<String, List<String>> headers = conn.getHeaderFields();
+        
+        Set<String> k = headers.keySet();
+        Iterator<String> keys = k.iterator();
+        
+        while( keys.hasNext() ) {//        	
+        	String key = keys.next();
+        	hostdata.setVectorValue(key,(String[])headers.get(key).toArray() );//        	
+        }		
+        return hostdata;//        
+	}*/
 	
 	/**
 	 * Enable default testing for TLS certificate trust chains.
@@ -742,27 +744,28 @@ class CipherSuiteUtil {
 		return result.toArray(new X509Certificate[0]);
 	}
 
-//	/**
-//	 * Test to see if a particular SHA1 hash is a root in the Java system keystore.
-//	 * @param sha1hash
-//	 * @return true, SHA1 hash belongs to a Java root.  false, no Java root found.
-//	 */
-//	public static final boolean isJavaRootCertificateSHA1(String sha1hash) throws Exception {
-//		
-//		boolean result = false;
-//		
-//		for( X509Certificate cert : getJavaRootCertificates() ) {
-//			
-//			String fingerprint = sha1Fingerprint(cert.getEncoded());
-//		
-//			if( fingerprint.equals(sha1hash) ) {
-//				
-//				result = true; break;
-//			}
-//		}
-//		
-//		return result;
-//	}
+	/*
+	/**
+	 * Test to see if a particular SHA1 hash is a root in the Java system keystore.
+	 * @param sha1hash
+	 * @return true, SHA1 hash belongs to a Java root.  false, no Java root found.
+	 */
+	public static final boolean isJavaRootCertificateSHA1(String sha1hash) throws Exception {
+		
+		boolean result = false;
+		
+		for( X509Certificate cert : getJavaRootCertificates() ) {
+			
+			String fingerprint = sha1Fingerprint(cert.getEncoded());
+		
+			if( fingerprint.equals(sha1hash) ) {
+				
+				result = true; break;
+			}
+		}
+		
+		return result;
+	}*/
 	
 	/**
 	 * Test to see if a particular IssuerDN is a root in the Java system keystore.
@@ -819,39 +822,40 @@ class CipherSuiteUtil {
 		return valid;
 	}
 	
+	/*
 	// check OCSP
-//	public static final String checkOCSPStatus(X509Certificate cert, X509Certificate issuer) {
-//		
-//		// init PKIX parameters
-//        PKIXParameters params = null;
-//	    params = new PKIXParameters(trustedCertsSet);
-//	    params.addCertStore(store);
-//	
-//	    // enable OCSP
-//	    Security.setProperty("ocsp.enable", "true");
-//	    if (ocspServer != null) {
-//			Security.setProperty("ocsp.responderURL", args[1]);
-//			Security.setProperty("ocsp.responderCertSubjectName",
-//			    ocspCert.getSubjectX500Principal().getName());
-//	    }
-//	
-//	    // perform validation
-//	    CertPathValidator cpv = CertPathValidator.getInstance("PKIX");
-//	    PKIXCertPathValidatorResult cpv_result  =
-//		(PKIXCertPathValidatorResult) cpv.validate(cp, params);
-//	    X509Certificate trustedCert = (X509Certificate)
-//		cpv_result.getTrustAnchor().getTrustedCert();
-//	
-//	    if (trustedCert == null) {
-//	    	System.out.println("Trsuted Cert = NULL");
-//	    } else {
-//	    	System.out.println("Trusted CA DN = " +
-//	    			trustedCert.getSubjectDN());
-//	    }
-//		
-//		return buff.toString();	
-//		
-//    }
+	public static final String checkOCSPStatus(X509Certificate cert, X509Certificate issuer) {
+		
+		// init PKIX parameters
+        PKIXParameters params = null;
+	    params = new PKIXParameters(trustedCertsSet);
+	    params.addCertStore(store);
+	
+	    // enable OCSP
+	    Security.setProperty("ocsp.enable", "true");
+	    if (ocspServer != null) {
+			Security.setProperty("ocsp.responderURL", args[1]);
+			Security.setProperty("ocsp.responderCertSubjectName",
+			    ocspCert.getSubjectX500Principal().getName());
+	    }
+	
+	    // perform validation
+	    CertPathValidator cpv = CertPathValidator.getInstance("PKIX");
+	    PKIXCertPathValidatorResult cpv_result  =
+		(PKIXCertPathValidatorResult) cpv.validate(cp, params);
+	    X509Certificate trustedCert = (X509Certificate)
+		cpv_result.getTrustAnchor().getTrustedCert();
+	
+	    if (trustedCert == null) {
+	    	System.out.println("Trsuted Cert = NULL");
+	    } else {
+	    	System.out.println("Trusted CA DN = " +
+	    			trustedCert.getSubjectDN());
+	    }
+		
+		return buff.toString();	
+		
+    }*/
 	
 	/**
 	 * Parse out the Cipher's Key Exchange Algorithm
@@ -897,41 +901,42 @@ class CipherSuiteUtil {
 		return buff.toString();		
 	}	
 	
-//	   /**
-//	    * Generate SHA1 fingerprint from certificate bytes
-//	    * @param der Certificate in bytes
-//	    * @return String SHA1 fingerprint in hex.
-//	    * @throws NoSuchAlgorithmException
-//	    */
-//	   static final String sha1Fingerprint( byte[] der ) throws NoSuchAlgorithmException {
-//		   
-//		   MessageDigest sha1 = MessageDigest.getInstance("SHA1");
-//		   sha1.update( der );
-//		   
-//		   StringBuffer buff = new StringBuffer();
-//		   buff.append(byteArrayToHex(sha1.digest()));
-//		   
-//		   return buff.toString();
-//		   
-//	   }
+		/*
+	   /**
+	    * Generate SHA1 fingerprint from certificate bytes
+	    * @param der Certificate in bytes
+	    * @return String SHA1 fingerprint in hex.
+	    * @throws NoSuchAlgorithmException
+	    */
+	   static final String sha1Fingerprint( byte[] der ) throws NoSuchAlgorithmException {
+		   
+		   MessageDigest sha1 = MessageDigest.getInstance("SHA1");
+		   sha1.update( der );
+		   
+		   StringBuffer buff = new StringBuffer();
+		   buff.append(byteArrayToHex(sha1.digest()));
+		   
+		   return buff.toString();
+		   
+	   }*/
 	   
-//	   /**
-//	    * Generate MD5 fingerprint from certificate bytes
-//	    * @param der Certificate in bytes
-//	    * @return String MD5 fingerprint in hex.
-//	    * @throws NoSuchAlgorithmException
-//	    */	   
-//	   static final String md5Fingerprint( byte[] der ) throws NoSuchAlgorithmException {
-//		   
-//		   MessageDigest sha1 = MessageDigest.getInstance("MD5");
-//		   sha1.update( der );
-//		   
-//		   StringBuffer buff = new StringBuffer();
-//		   buff.append(byteArrayToHex(sha1.digest()));
-//		   
-//		   return buff.toString();
-//		   
-//	   }
+	   /**
+	    * Generate MD5 fingerprint from certificate bytes
+	    * @param der Certificate in bytes
+	    * @return String MD5 fingerprint in hex.
+	    * @throws NoSuchAlgorithmException
+	    */	   
+	   static final String md5Fingerprint( byte[] der ) throws NoSuchAlgorithmException {
+		   
+		   MessageDigest sha1 = MessageDigest.getInstance("MD5");
+		   sha1.update( der );
+		   
+		   StringBuffer buff = new StringBuffer();
+		   buff.append(byteArrayToHex(sha1.digest()));
+		   
+		   return buff.toString();
+		   
+	   }
 	   
 	/**
 	* Convert an array of bytes to a String based hex representation
@@ -1525,84 +1530,84 @@ class CipherSuiteUtil {
 		CipherSuite cs = new CipherSuite();
 		cs.suite = suite;
 		cs.names = names;
-//		cs.isCBC = isCBC;
+		cs.isCBC = isCBC;
 		cs.strength = strength;
 		CIPHER_SUITES.put(suite, cs);
 		
-
-//		/*
-//		 * Consistency test: the strength and CBC status can normally
-//		 * be inferred from the name itself.
-//		 */
-//		boolean inferredCBC = name.contains("_CBC_");
-//		int inferredStrength;
-//		if (name.contains("_NULL_")) {
-//			inferredStrength = CLEAR;
-//		} else if (name.contains("DES40") || name.contains("_40_")
-//			|| name.contains("EXPORT40"))
-//		{
-//			inferredStrength = WEAK;
-//		} else if ((name.contains("_DES_") || name.contains("DES_64"))
-//			&& !name.contains("DES_192"))
-//		{
-//			inferredStrength = MEDIUM;
-//		} else {
-//			inferredStrength = STRONG;
-//		}
-//		if (inferredStrength != strength || inferredCBC != isCBC) {
-//			throw new RuntimeException(
-//				"wrong classification: " + name);
-//		}
+	
+		/*
+		* Consistency test: the strength and CBC status can normally
+		* be inferred from the name itself.
+		*/
+		boolean inferredCBC = name.contains("_CBC_");
+		int inferredStrength;
+		if (name.contains("_NULL_")) {
+			inferredStrength = CLEAR;
+		} else if (name.contains("DES40") || name.contains("_40_")
+			|| name.contains("EXPORT40"))
+		{
+			inferredStrength = WEAK;
+		} else if ((name.contains("_DES_") || name.contains("DES_64"))
+			&& !name.contains("DES_192"))
+		{
+			inferredStrength = MEDIUM;
+		} else {
+			inferredStrength = STRONG;
+		}
+		if (inferredStrength != strength || inferredCBC != isCBC) {
+			throw new RuntimeException(
+				"wrong classification: " + name);
+		}
 	}
-
-//	private static final void N(int suite, String name)
-//	{
-//		makeCS(suite, name, false, CLEAR);
-//	}
-//
-//	private static final void S4(int suite, String name)
-//	{
-//		makeCS(suite, name, false, WEAK);
-//	}
-//
-//	private static final void S8(int suite, String name)
-//	{
-//		makeCS(suite, name, false, STRONG);
-//	}
-//
-//	private static final void B4(int suite, String name)
-//	{
-//		makeCS(suite, name, true, WEAK);
-//	}
-//
-//	private static final void B5(int suite, String name)
-//	{
-//		makeCS(suite, name, true, MEDIUM);
-//	}
-//
-//	private static final void B8(int suite, String name)
-//	{
-//		makeCS(suite, name, true, STRONG);
-//	}
+	
+	private static final void N(int suite, String name)
+	{
+		makeCS(suite, name, false, CLEAR);
+	}
+	
+	private static final void S4(int suite, String name)
+	{
+		makeCS(suite, name, false, WEAK);
+	}
+	
+	private static final void S8(int suite, String name)
+	{
+		makeCS(suite, name, false, STRONG);
+	}
+	
+	private static final void B4(int suite, String name)
+	{
+		makeCS(suite, name, true, WEAK);
+	}
+	
+	private static final void B5(int suite, String name)
+	{
+		makeCS(suite, name, true, MEDIUM);
+	}
+	
+	private static final void B8(int suite, String name)
+	{
+		makeCS(suite, name, true, STRONG);
+	}
 	
 	static boolean testBEAST(InetSocketAddress isa,
 			int version, Set<Integer> supp)
 		{
 			/*
-			 * TLS 1.1+ is not vulnerable to BEAST.
-			 * We do not test SSLv2 either.
-			 */
+			* TLS 1.1+ is not vulnerable to BEAST.
+			* We do not test SSLv2 either.
+			*/
 			if (version < 0x0300 || version > 0x0301) {
 				return false;
 			}
-
+	
 			/*
-			 * BEAST attack works if the server allows the client to
-			 * use a CBC cipher. Existing clients also supports RC4,
-			 * so we consider that a server protects the clients if
-			 * it chooses RC4 over CBC streams when given the choice.
-			 * We only consider strong cipher suites here.
-			 */
+			* BEAST attack works if the server allows the client to
+			* use a CBC cipher. Existing clients also supports RC4,
+			* so we consider that a server protects the clients if
+			* it chooses RC4 over CBC streams when given the choice.
+			* We only consider strong cipher suites here.
+			*/
 			List<Integer> strongCBC = new ArrayList<Integer>();
 			List<Integer> strongStream = new ArrayList<Integer>();
 			for (int suite : supp) {
@@ -1613,11 +1618,11 @@ class CipherSuiteUtil {
 				if (cs.strength < STRONG) {
 					continue;
 				}
-//				if (cs.isCBC) {
-//					strongCBC.add(suite);
-//				} else {
-//					strongStream.add(suite);
-//				}
+				if (cs.isCBC) {
+					strongCBC.add(suite);
+				} else {
+					strongStream.add(suite);
+				}
 			}
 			if (strongCBC.size() == 0) {
 				return false;

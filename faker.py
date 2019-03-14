@@ -14,8 +14,8 @@ class Faker:
     def faker_controller(self):
         #self.progress_bar()
         #self.progress()
-        #self.process_picker(1)
-        cr()
+        self.process_picker()
+        #cr()
 
     def progress(self):
         def bar(count, total, status=''):
@@ -45,7 +45,9 @@ class Faker:
             bar.next()
         bar.finish()
 
-    def process_picker(self, call_num):
+    def process_picker(self):
+        #call_num = random.randint(1, 11)
+        call_num = 3
         count = 1
         while count <= call_num:
             rando_selecto = random.randint(1, 11)
@@ -63,8 +65,6 @@ class Faker:
                 11: fp.ipconfig(self)
             }
             switch.get(rando_selecto)
-            #execution = switch.get(rando_selecto)
-            #execution()
             count += 1
 
 if __name__ == '__main__':
