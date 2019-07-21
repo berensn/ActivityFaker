@@ -12,10 +12,16 @@ class Faker:
         self.faker_controller()
 
     def faker_controller(self):
+        print(f'Faker Controller')
+        #selection_list_selector = random.randint(1, 11)
+        selection_list_selector = 1
+        selection_list = {
+            1: self.process_picker()
+        }
         #self.progress_bar()
         #self.progress()
-        self.process_picker()
         #cr()
+        selection_list.get(selection_list_selector)
 
     def progress(self):
         def bar(count, total, status=''):
@@ -48,24 +54,27 @@ class Faker:
     def process_picker(self):
         #call_num = random.randint(1, 11)
         call_num = 3
-        count = 1
-        while count <= call_num:
+        count = 0
+        process_list = {
+            1: "ping",
+            2: "ls",
+            3: "nbtstat",
+            4: "netstat",
+            5: "processes",
+            6: "tasklist",
+            7: "route",
+            8: "system_info",
+            9: "tracert",
+            10: "nslookup",
+            11: "ipconfig"
+        }
+        selectorama = fp()
+        while count < call_num:
             rando_selecto = random.randint(1, 11)
-            switch = {
-                1: fp.ping(self),
-                2: fp.ls(self),
-                3: fp.nbtstat(self),
-                4: fp.netstat(self),
-                5: fp.processes(self),
-                6: fp.tasklist(self),
-                7: fp.route(self),
-                8: fp.system_info(self),
-                9: fp.tracert(self),
-                10: fp.nslookup(self),
-                11: fp.ipconfig(self)
-            }
-            switch.get(rando_selecto)
+            selectorama.selector(process_list.get(rando_selecto))
             count += 1
+            print(count)
+        #self.faker_controller()
 
 if __name__ == '__main__':
     Faker()
