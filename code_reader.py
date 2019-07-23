@@ -1,3 +1,8 @@
+from pygments import highlight
+from pygments.style import Style
+from pygments.token import Token
+from pygments.lexers import JavaLexer
+from pygments.formatters import Terminal256Formatter
 import pygments
 import random
 import time
@@ -19,7 +24,7 @@ class CodeReader:
 
         with open(file_list.get(rand_int)) as file:
             for line in file:
-                line_array.append(line)
+                line_array.append(line.rstrip())
 
         line_array_length = len(line_array)
 
@@ -31,6 +36,9 @@ class CodeReader:
             for n in range(1, rando_lino):
                 if count == line_array_length:
                     break
-                print(line_array[count].rstrip())
+                line = line_array[count].rstrip()
+                pygmatized_line = highlight(line, JavaLexer(), Terminal256Formatter())
+                print(pygmatized_line)
                 time.sleep(rando_sleepo)
                 count += 1
+                

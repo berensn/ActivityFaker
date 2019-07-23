@@ -13,15 +13,15 @@ class Faker:
 
     def faker_controller(self):
         print(f'Faker Controller')
-        #selection_list_selector = random.randint(1, 11)
-        selection_list_selector = 1
         selection_list = {
-            1: self.process_picker()
+            1: "process_picker",
+            2: "progress_bar",
+            3: "progress",
+            4: "code_reader"
         }
-        #self.progress_bar()
-        #self.progress()
-        #cr()
-        selection_list.get(selection_list_selector)
+        rando_selecto = random.randint(4, 4)
+        selectopresto = getattr(self, selection_list.get(rando_selecto))
+        return selectopresto()
 
     def progress(self):
         def bar(count, total, status=''):
@@ -43,6 +43,7 @@ class Faker:
                 bar(i, bar_length, status="Hashing file")
                 time.sleep(0.005)
                 i += 1
+        #self.faker_controller()
 
     def progress_bar(self):
         bar = Bar('Loading', fill='■', suffix='%(percent)d%%')
@@ -50,6 +51,7 @@ class Faker:
             time.sleep(0.01)
             bar.next()
         bar.finish()
+        #self.faker_controller()
 
     def process_picker(self):
         #call_num = random.randint(1, 11)
@@ -74,6 +76,10 @@ class Faker:
             selectorama.selector(process_list.get(rando_selecto))
             count += 1
             print(count)
+        #self.faker_controller()
+
+    def code_reader(self):
+        cr()
         #self.faker_controller()
 
 if __name__ == '__main__':
