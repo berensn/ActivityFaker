@@ -20,8 +20,8 @@ class Faker:
             4: "code_reader"
         }
         rando_selecto = random.randint(4, 4)
-        selectopresto = getattr(self, selection_list.get(rando_selecto))
-        return selectopresto()
+        selecto_presto = getattr(self, selection_list.get(rando_selecto))
+        return selecto_presto()
 
     def progress(self):
         def bar(count, total, status=''):
@@ -75,7 +75,6 @@ class Faker:
             rando_selecto = random.randint(1, 11)
             selectorama.selector(process_list.get(rando_selecto))
             count += 1
-            print(count)
         #self.faker_controller()
 
     def code_reader(self):
